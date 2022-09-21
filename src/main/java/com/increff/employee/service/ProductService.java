@@ -24,9 +24,18 @@ public class ProductService {
 
         for (ProductPojo productPojo : productPojoList) {
             ProductPojo productPojo1 = getByParameters(productPojo);
-            BrandPojo brandPojo = brandService.getByID(productPojo.getBrand_category());
+            BrandPojo brandPojo = brandService.getByID(productPojo.getBrandCategory());
             if (productPojo1 != null) {
                 throw new ApiException("Already present in the database");
+            }
+            else if(productPojo.getMrp()<0){
+                throw new ApiException("MRP can't be negative");
+            }
+            else if(brandPojo==null){
+                throw new ApiException("Brand is not present in the database");
+            }
+            else if(productPojo.getName().length()==0 || productPojo.getBarcode().length()==0){
+                throw new ApiException("Product name or barcode cant be negative");
             }
             productDao.add(productPojo);
         }
@@ -37,7 +46,7 @@ public class ProductService {
     }
 
     @Transactional(rollbackFor = ApiException.class)
-    public void delete(int id) {
+    public void delete(Long id) {
         ProductPojo productPojo = getByID(id);
         if (productPojo == null) {
             throw new ApiException("Not present in the database");
@@ -46,17 +55,17 @@ public class ProductService {
     }
 
     @Transactional(rollbackFor = ApiException.class)
-    public void update(int id, ProductPojo productPojo) {
+    public void update(Long id, ProductPojo productPojo) {
         ProductPojo productPojo1 = getByID(id);
-        brandService.getByID(productPojo.getBrand_category());
+        brandService.getByID(productPojo.getBrandCategory());
 
         if (productPojo1 == null) {
             throw new ApiException("Not present in the database");
-        } else if (productPojo1.getBrand_category() == productPojo.getBrand_category() && productPojo1.getMrp() == productPojo.getMrp() && productPojo1.getBarcode() == productPojo.getBarcode() && productPojo1.getName() == productPojo.getName()) {
+        } else if (productPojo1.getBrandCategory() == productPojo.getBrandCategory() && productPojo1.getMrp() == productPojo.getMrp() && productPojo1.getBarcode() == productPojo.getBarcode() && productPojo1.getName() == productPojo.getName()) {
             throw new ApiException("No update needed");
         } else {
             productPojo.setId(productPojo1.getId());
-            productPojo.setBrand_category(productPojo1.getBrand_category());
+            productPojo.setBrandCategory(productPojo1.getBrandCategory());
             productPojo.setBarcode(productPojo1.getBarcode());
             productPojo.setMrp(productPojo1.getMrp());
             productPojo.setName(productPojo1.getName());
@@ -64,9 +73,8 @@ public class ProductService {
         }
     }
 
-    public ProductPojo getByID(int id) {
-        ProductPojo productPojo = productDao.getByID(id);
-        return productPojo;
+    public ProductPojo getByID(Long id) {
+       return productDao.getByID(id);
     }
 
     public ProductPojo getByParameters(ProductPojo productPojo) {

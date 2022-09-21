@@ -1,14 +1,17 @@
 function getBrandUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/brand";
+	return baseUrl + "/pos";
 }
 
 //BUTTON ACTIONS
 function addBrand(event){
 	//Set the values to update
 	var $form = $("#brand-form");
-	var json = toJson($form);
-	var url = getBrandUrl() + "/create";
+	var jsonEx = JSON.parse(toJson($form));
+	var jsonString=[];
+	jsonString.push(jsonEx);
+	var json=JSON.stringify(jsonString);
+	var url = getBrandUrl() + "/brands";
 
 	$.ajax({
 	   url: url,
@@ -30,7 +33,7 @@ function updateBrand(event){
 	$('#edit-brand-modal').modal('toggle');
 	//Get the ID
 	var id = $("#brand-edit-form input[name=id]").val();
-	var url = getBrandUrl() + "/update/" + id;
+	var url = getBrandUrl() + "/brands/update/" + id;
 
 	//Set the values to update
 	var $form = $("#brand-edit-form");
@@ -54,7 +57,7 @@ function updateBrand(event){
 
 
 function getBrandList(){
-	var url = getBrandUrl() + "/viewAll";
+	var url = getBrandUrl() + "/brands";
 	$.ajax({
 	   url: url,
 	   type: 'GET',
@@ -106,8 +109,8 @@ function uploadRows(){
 	var row = fileData[processCount];
 	processCount++;
 	
-	var json = JSON.stringify(row);
-	var url = getBrandUrl() + "/create";
+	var json = JSON.stringify([row]);
+	var url = getBrandUrl() + "/brands";
 
 	//Make ajax call
 	$.ajax({
@@ -145,7 +148,7 @@ function displayBrandList(data){
 		var row = '<tr>'
 		+ '<td>' + e.id + '</td>'
 		+ '<td>' + e.brandName + '</td>'
-		+ '<td>'  + e.category + '</td>'
+		+ '<td>'  + e.categoryName + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
@@ -153,7 +156,7 @@ function displayBrandList(data){
 }
 
 function displayEditBrand(id){
-	var url = getBrandUrl() + "/view/" + id;
+	var url = getBrandUrl() + "/brands/" + id;
 	$.ajax({
 	   url: url,
 	   type: 'GET',
@@ -196,7 +199,7 @@ function displayUploadData(){
 
 function displayBrand(data){
 	$("#brand-edit-form input[name=brandName]").val(data.brandName);
-	$("#brand-edit-form input[name=category]").val(data.category);
+	$("#brand-edit-form input[name=categoryName]").val(data.categoryName);
 	$("#brand-edit-form input[name=id]").val(data.id);
 	$('#edit-brand-modal').modal('toggle');
 }

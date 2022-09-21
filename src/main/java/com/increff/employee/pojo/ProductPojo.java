@@ -4,23 +4,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class ProductPojo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
+    @Column(unique = true)
     private String barcode;
-    private int brand_category;
+
+    private long brandCategory;
     private String name;
-    private double mrp;
+    private Double mrp;
 }

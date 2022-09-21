@@ -1,6 +1,6 @@
 function getProductUrl(){
 	var baseUrl = $("meta[name=baseUrl]").attr("content")
-	return baseUrl + "/product";
+	return baseUrl + "/pos/products/";
 }
 
 //BUTTON ACTIONS
@@ -8,7 +8,7 @@ function addProduct(event){
 	//Set the values to update
 	var $form = $("#product-form");
 	var json = toJsonArray($form);
-	var url = getProductUrl() + "/create";
+	var url = getProductUrl() + "";
     console.log(json);
 	$.ajax({
 	   url: url,
@@ -55,7 +55,7 @@ function updateProduct(event){
 
 
 function getProductList(){
-	var url = getProductUrl() + "/viewAll";
+	var url = getProductUrl() + "";
 	$.ajax({
 	   url: url,
 	   type: 'GET',
@@ -148,7 +148,8 @@ function displayProductList(data){
 		+ '<td>' + e.name + '</td>'
 		+ '<td>' + e.barcode + '</td>'
 		+ '<td>'  + e.mrp + '</td>'
-		+ '<td>' + e.brandCategory + '</td>'
+		+ '<td>' + e.brand + '</td>'
+		+'<td>' + e.category + '</td>'
 		+ '<td>' + buttonHtml + '</td>'
 		+ '</tr>';
         $tbody.append(row);
@@ -156,7 +157,7 @@ function displayProductList(data){
 }
 
 function displayEditProduct(id){
-	var url = getProductUrl() + "/view/" + id;
+	var url = getProductUrl() + id;
 	$.ajax({
 	   url: url,
 	   type: 'GET',
@@ -201,7 +202,8 @@ function displayProduct(data){
 	$("#product-edit-form input[name=name]").val(data.name);
 	$("#product-edit-form input[name=mrp]").val(data.mrp);
 	$("#product-edit-form input[name=barcode]").val(data.barcode);
-	$("#product-edit-form input[name=brandCategory]").val(data.brandCategory);
+	$("#product-edit-form input[name=brand]").val(data.brand);
+	$("#product-edit-form input[name=category]").val(data.category);
 	$("#product-edit-form input[name=id]").val(data.id);
 	$('#edit-product-modal').modal('toggle');
 }

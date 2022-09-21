@@ -31,30 +31,34 @@ public class BrandService {
             if(brandpojo!=null){
                 throw new ApiException("Already present in the database");
             }
+            else if(brandPojo.getCategoryName().length()==0 || brandPojo.getBrandName().length()==0){
+                throw new ApiException("Brand or Category should not be null");
+            }
             brandDao.add(brandPojo);
         }
     }
     @Transactional(rollbackFor=ApiException.class)
-    public void delete(int id)
+    public void delete(Long id)
     {
         getByID(id);
         brandDao.delete(id);
     }
     @Transactional(rollbackFor=ApiException.class)
-    public void update(int id, BrandPojo input)
+    public void update(Long id, BrandPojo input)
     {
-        BrandPojo brandpojo=getByNameAndCategory(input.getBrandName(), input.getCategoryName());
-
+        BrandPojo brandpojo=getByID(id);
         if(brandpojo==null){
             throw new ApiException("Id not present in the database");
         }
-
+        else if(input.getBrandName().length()==0 || input.getCategoryName().length()==0){
+            throw new ApiException("Brand can not be updated with null input");
+        }
         brandpojo.setId(id);
         brandpojo.setBrandName(input.getBrandName());
         brandpojo.setCategoryName(input.getCategoryName());
         brandDao.update(brandpojo);
     }
-    public BrandPojo getByID(int id)
+    public BrandPojo getByID(Long id)
     {
         BrandPojo brandPojo = brandDao.getByID(id);
         if(brandPojo==null){

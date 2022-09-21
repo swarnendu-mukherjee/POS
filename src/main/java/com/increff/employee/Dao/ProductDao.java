@@ -14,36 +14,32 @@ public class ProductDao {
 
     @PersistenceContext
     private EntityManager em;
-    public static String selectByID="select p from ProductPojo p where id=:id";
-    public static String selectByParameters="select p from ProductPojo p where barcode=:barcode " +
-            "and brand_category=:brand_category and name=:name and mrp=:mrp";
-    public static String selectAll="select p from ProductPojo p";
-    public static String deleteByID="delete from ProductPojo p where id=:id";
+    private static final String SELECTBYID="select p from ProductPojo p where id=:id";
+    private static final String SELETBYPARAMETERS="select p from ProductPojo p where barcode=:barcode";
+    private static final String SELECTALL="select p from ProductPojo p";
+    private static final String DELETEBYID="delete from ProductPojo p where id=:id";
     public List<ProductPojo> getAll(){
-        TypedQuery<ProductPojo> query=em.createQuery(selectAll, ProductPojo.class);
+        TypedQuery<ProductPojo> query=em.createQuery(SELECTALL, ProductPojo.class);
         return query.getResultList();
     }
-    public void delete(int id){
-        Query query=em.createQuery(deleteByID);
+    public void delete(Long id){
+        Query query=em.createQuery(DELETEBYID);
         query.setParameter("id",id);
         query.executeUpdate();
     }
-    public void update(int id, ProductPojo productPojo) {
+    public void update(Long id, ProductPojo productPojo) {
     }
     public void add(ProductPojo productPojo) {
         em.persist(productPojo);
     }
-    public ProductPojo getByID(int id) {
-        TypedQuery<ProductPojo> query=em.createQuery(selectByID, ProductPojo.class);
+    public ProductPojo getByID(Long id) {
+        TypedQuery<ProductPojo> query=em.createQuery(SELECTBYID, ProductPojo.class);
         query.setParameter("id",id);
         return query.getResultStream().findFirst().orElse(null);
     }
     public ProductPojo getByParameters(ProductPojo productPojo){
-        TypedQuery<ProductPojo> query=em.createQuery(selectByParameters, ProductPojo.class);
+        TypedQuery<ProductPojo> query=em.createQuery(SELETBYPARAMETERS, ProductPojo.class);
         query.setParameter("barcode",productPojo.getBarcode());
-        query.setParameter("brand_category",productPojo.getBrand_category());
-        query.setParameter("name",productPojo.getName());
-        query.setParameter("mrp",productPojo.getMrp());
         return query.getResultStream().findFirst().orElse(null);
     }
 

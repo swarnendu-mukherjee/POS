@@ -33,15 +33,20 @@ public class BrandApiController {
         brandDto.add(brandFormList);
     }
 
+    @ApiOperation(value = "get by an id")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public BrandData getByID(@PathVariable Long id) {return brandDto.getByID(id);}
+
+
     @ApiOperation(value = "delete a brand category pair by id")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable Long id) {
         brandDto.delete(id);
     }
 
     @ApiOperation(value = "update a brand category pair by id")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody BrandForm brandForm) {
+    public void update(@PathVariable Long id, @RequestBody BrandForm brandForm) {
         brandDto.update(id, brandForm);
     }
 

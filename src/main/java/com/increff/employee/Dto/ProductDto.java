@@ -3,6 +3,7 @@ package com.increff.employee.Dto;
 
 import com.increff.employee.Dto.Helper.BrandHelper;
 import com.increff.employee.Dto.Helper.ProductHelper;
+import com.increff.employee.Exception.ApiException;
 import com.increff.employee.model.Data.BrandData;
 import com.increff.employee.model.Data.ProductData;
 import com.increff.employee.model.Forms.BrandForm;
@@ -13,11 +14,12 @@ import com.increff.employee.service.BrandService;
 import com.increff.employee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+@Service
 public class ProductDto {
 
 
@@ -25,28 +27,50 @@ public class ProductDto {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private BrandService brandService;
+
     public List<ProductData> getAll() {
-        return ProductHelper.ConvertPojoToData(productService.getAll());
+        List<ProductPojo> productPojoList=productService.getAll();
+        return ProductHelper.ConvertPojoToData(productPojoList,getByProductPojo(productPojoList));
+    }
+    public ProductData getById(Long id){
+        ProductPojo productPojo = productService.getByID(id);
+        BrandPojo brandPojo=brandService.getByID(productPojo.getBrandCategory());
+        return ProductHelper.convertPojoToData(productPojo, brandPojo);
     }
 
     public void add(List<ProductForm> productFormList) {
         List<ProductPojo> productPojoList = new ArrayList<>();
         for (ProductForm productForm : productFormList) {
             //BrandHelper.Normalize(brandForm);
-            ProductPojo productPojo = ProductHelper.ConvertFormToPojo(productForm);
+            BrandPojo brandPojo=brandService.getByNameAndCategory(productForm.getBrand(),productForm.getCategory());
+            if(brandPojo==null){
+                throw new ApiException("Brand is not present in the database");
+            }
+            long id=brandPojo.getId();
+            ProductPojo productPojo = ProductHelper.ConvertFormToPojo(productForm,id);
             productPojoList.add(productPojo);
         }
         productService.add(productPojoList);
     }
 
-    public void delete(int id) {
+    public void delete(Long id) {
         productService.delete(id);
     }
 
-    public void update(int id, ProductForm productForm) {
+    public void update(Long id, ProductForm productForm) {
         //BrandHelper.Normalize(brandForm);
-        ProductPojo productPojo = ProductHelper.ConvertFormToPojo(productForm);
+        long brandID=brandService.getByNameAndCategory(productForm.getBrand(),productForm.getCategory()).getId();
+        ProductPojo productPojo = ProductHelper.ConvertFormToPojo(productForm,brandID);
         productService.update(id, productPojo);
+    }
+    public List<BrandPojo> getByProductPojo(List<ProductPojo> productPojoList){
+        List<BrandPojo> brandPojoList=new ArrayList<>();
+        for(ProductPojo productPojo: productPojoList){
+            brandPojoList.add(brandService.getByID(productPojo.getBrandCategory()));
+        }
+        return brandPojoList;
     }
 
 }

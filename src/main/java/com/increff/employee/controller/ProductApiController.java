@@ -25,6 +25,10 @@ public class ProductApiController {
         return productDto.getAll();
     }
 
+    @ApiOperation("The Product by it's id")
+    @RequestMapping(value="{id}",method= RequestMethod.GET)
+    public ProductData getById(@PathVariable Long id){return productDto.getById(id);}
+
     @ApiOperation("Add a product")
     @RequestMapping(value="",method=RequestMethod.POST)
     public void add(@RequestBody List<ProductForm>productFormList)
@@ -34,14 +38,14 @@ public class ProductApiController {
 
     @ApiOperation("Delete a Product")
     @RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable int id)
+    public void delete(@PathVariable Long id)
     {
         productDto.delete(id);
     }
 
     @ApiOperation(value = "update a  category pair by id")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody ProductForm productForm) {
+    public void update(@PathVariable Long id, @RequestBody ProductForm productForm) {
         productDto.update(id, productForm);
     }
 

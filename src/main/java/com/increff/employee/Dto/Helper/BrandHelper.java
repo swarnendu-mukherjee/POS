@@ -18,8 +18,16 @@ public class BrandHelper {
             brandData.setId(brandPojo.getId());
             brandData.setBrandName(brandPojo.getBrandName());
             brandData.setCategoryName(brandPojo.getCategoryName());
+            brandDataList.add(brandData);
         }
         return brandDataList;
+    }
+    public static BrandData ConvertPojoToDataSingle(BrandPojo brandPojo){
+        BrandData brandData=new BrandData();
+        brandData.setId(brandPojo.getId());
+        brandData.setBrandName(brandPojo.getBrandName());
+        brandData.setCategoryName(brandPojo.getCategoryName());
+        return brandData;
     }
     public static BrandPojo ConvertFormToPojo(BrandForm brandForm)
     {
