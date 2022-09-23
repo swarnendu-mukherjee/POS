@@ -22,7 +22,9 @@ com/increff/employee/controller/BrandApiController.class
 com/increff/employee/pojo/ProductPojo.class
 com/increff/employee/model/Forms/BrandForm.class
 com/increff/employee/model/Data/ProductData.class
+com/increff/employee/model/Data/MessageData.class
 com/increff/employee/pojo/InventoryPojo.class
+com/increff/employee/controller/AppRestControllerAdvice.class
 com/increff/employee/spring/SpringConfig.class
 com/increff/employee/pojo/OrderPojo.class
 com/increff/employee/controller/UiController.class

@@ -21,7 +21,7 @@ public class InventoryApiController {
 
     @ApiOperation("Update the inventory")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public void update(@PathVariable int id, @RequestBody int quantity){inventoryDto.update(id,quantity);}
+    public void update(@PathVariable Long id, @RequestBody Long quantity){inventoryDto.update(id,quantity);}
 
 
     @ApiOperation("get all the inventory")
@@ -30,7 +30,7 @@ public class InventoryApiController {
 
     @ApiOperation("Getting inventory by id")
     @RequestMapping(value="/{id}",method = RequestMethod.GET)
-    public InventoryForm getById(@PathVariable int id){ return inventoryDto.getById(id);}
+    public InventoryForm getById(@PathVariable Long id){ return inventoryDto.getById(id);}
 
 
     @ApiOperation("Add a List")

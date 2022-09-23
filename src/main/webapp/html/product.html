@@ -10,49 +10,48 @@
 
 <div class="container">
 
-    <h3>products</h3>
-
-
+    <h3>Products</h3>
+    <hr>
+    <div class="row">
+        &nbsp;
+    </div>
     <!-- Top row with form-->
     <div class="row">
         <div class="col-12">
             <form class="form-inline" id="product-form">
-                <div class="form-group">
-                    <label for="inputProduct" class="col-sm-2 col-form-label">Product Name</label>
+                <div class="form-group mb-3 w-50">
+                    <label for="inputProduct" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="name" id="inputProduct" placeholder="Enter Product Name">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3 w-50">
                     <label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="barcode" id="inputBarcode" placeholder="Enter Barcode">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3 w-50">
                     <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" name="brand" id="inputBrand" placeholder="Enter Brand Name">
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group mb-3 w-50">
                     <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="category" id="inputcategory" placeholder="Enter Category Name">
+                        <input type="text" class="form-control" name="category" id="inputCategory" placeholder="Enter Category Name">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputMrp" class="col-sm-2 col-form-label">Mrp</label>
+                <div class="form-group mb-3 w-50">
+                    <label for="inputMrp" class="col-sm-2 col-form-label">MRP</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="mrp" id="inputMrp" placeholder="Enter Mrp">
+                        <input type="text" class="form-control" name="mrp" id="inputMrp" placeholder="Enter MRP">
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary" id="add-product">Add</button>
-                &nbsp;
-                <button type="button" class="btn btn-primary" id="refresh-data">Refresh</button>
-                &nbsp;
-                <button type="button" class="btn btn-primary" id="upload-data">Upload</button>
             </form>
+            <button type="button" class="form-group btn btn-outline-primary page-button" id="add-product">Add</button>
+            <button type="button" class="form-group btn btn-outline-primary page-button" id="upload-data">Upload</button>
         </div>
     </div>
 
@@ -68,17 +67,16 @@
             <table class="table table-striped" id="product-table">
                 <thead>
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">ID</th>
                     <th scope="col">Product Name</th>
                     <th scope="col">Barcode</th>
-                    <th scope="col">Mrp</th>
+                    <th scope="col">MRP</th>
                     <th scope="col">Brand</th>
                     <th scope="col">Category</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
 
@@ -87,7 +85,7 @@
 
     <!-- product Edit Modal -->
     <div class="modal" tabindex="-1" role="dialog" id="edit-product-modal">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog mw-100 w-75" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Product</h5>
@@ -98,33 +96,33 @@
                 <div class="modal-body">
                     <form class="form-inline" id="product-edit-form">
                         <div class="form-group">
-                            <label for="inputProduct" class="col-sm-2 col-form-label">Product name</label>
+                            <label for="barcode" class="col-sm-2 col-form-label">Barcode :</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="name" placeholder="Enter Product name">
+                                <input class="form-control" id = "barcode" name="barcode" readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputMrp" class="col-sm-2 col-form-label">Mrp</label>
+                            <label for="brandName" class="col-sm-2 col-form-label">Brand :</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="mrp" placeholder="Enter Product Mrp">
+                                <input class="form-control" name="brand" id = "brandName" readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>
+                            <label for="category" class="col-sm-2 col-form-label">Catogory :</label>
                             <div class="col-sm-10">
-                                <label for="inputBarcode" class="col-sm-2 col-form-label">Barcode</label>
+                                <input class="form-control" name="category" id = "category" readonly>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputBrand" class="col-sm-2 col-form-label">Brand</label>
+                            <label for="inputName" class="col-sm-2 col-form-label">Product Name :</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="brand" id="inputBrand" placeholder="Enter Brand Name">
+                                <input type="text" class="form-control" name="name" id = "inputName" placeholder="Enter Product name">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputCategory" class="col-sm-2 col-form-label">Category</label>
+                            <label for="mrp" class="col-sm-2 col-form-label">MRP :</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="category" id="inputcategory" placeholder="Enter Category Name">
+                                <input type="text" class="form-control" name="mrp" id = "mrp" placeholder="Enter Product Mrp">
                             </div>
                         </div>
 
@@ -132,8 +130,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="update-product">Update</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-outline-primary" id="update-product">Update</button>
                 </div>
             </div>
         </div>
@@ -153,7 +151,7 @@
                 </div>
 
                 <div class="modal-body">
-                    <div class="employee-file">
+                    <div class="product-file">
                         <input type="file" class="custom-file-input" id="productFile">
                         <label class="custom-file-label" for="productFile" id="productFileName">Choose file</label>
                     </div>

@@ -31,7 +31,7 @@ function updateProduct(event){
 	//Get the ID
 	var id = $("#product-edit-form input[name=id]").val();
 	console.log(id);
-	var url = getProductUrl() + "/update/" + id;
+	var url = getProductUrl() + id;
 
 	//Set the values to update
 	var $form = $("#product-edit-form");
@@ -108,7 +108,7 @@ function uploadRows(){
 	processCount++;
 
 	var json = JSON.stringify([row]);
-	var url = getProductUrl() + "/create";
+	var url = getProductUrl();
 
 	//Make ajax call
 	$.ajax({
@@ -202,8 +202,11 @@ function displayProduct(data){
 	$("#product-edit-form input[name=name]").val(data.name);
 	$("#product-edit-form input[name=mrp]").val(data.mrp);
 	$("#product-edit-form input[name=barcode]").val(data.barcode);
-	$("#product-edit-form input[name=brand]").val(data.brand);
-	$("#product-edit-form input[name=category]").val(data.category);
+	//document.getElementById('barcodeid').innerHTML=data.barcode;
+	//document.getElementById('brand').innerHTML=data.brand;
+	//document.getElementById('category').innerHTML=data.category;
+    $("#product-edit-form input[name=brand]").val(data.brand);
+    $("#product-edit-form input[name=category]").val(data.category);
 	$("#product-edit-form input[name=id]").val(data.id);
 	$('#edit-product-modal').modal('toggle');
 }

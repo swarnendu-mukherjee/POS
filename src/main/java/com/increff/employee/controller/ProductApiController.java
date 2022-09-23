@@ -44,7 +44,7 @@ public class ProductApiController {
     }
 
     @ApiOperation(value = "update a  category pair by id")
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public void update(@PathVariable Long id, @RequestBody ProductForm productForm) {
         productDto.update(id, productForm);
     }

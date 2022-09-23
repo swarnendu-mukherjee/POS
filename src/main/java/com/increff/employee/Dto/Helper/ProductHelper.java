@@ -34,7 +34,7 @@ public class ProductHelper {
     return productDataList;
 }
 
-public static ProductPojo ConvertFormToPojo(ProductForm productForm, long id){
+public static ProductPojo ConvertFormToPojo(ProductForm productForm, Long id){
 
     ProductPojo productPojo=new ProductPojo();
     productPojo.setBarcode(productForm.getBarcode());

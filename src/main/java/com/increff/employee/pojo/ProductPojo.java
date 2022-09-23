@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Getter
@@ -16,9 +17,10 @@ public class ProductPojo {
     private Long id;
 
     @Column(unique = true)
+    @NotNull
     private String barcode;
 
-    private long brandCategory;
+    private Long brandCategory;
     private String name;
     private Double mrp;
 }

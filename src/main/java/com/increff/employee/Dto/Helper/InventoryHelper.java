@@ -14,6 +14,7 @@ public class InventoryHelper {
         for(InventoryForm inventoryForm:inventoryForms){
             InventoryPojo inventoryPojo=new InventoryPojo();
             inventoryPojo.setId(inventoryForm.getId());
+            inventoryPojo.setQuantity(inventoryForm.getQuantity());
             inventoryPojoList.add(inventoryPojo);
         }
         return inventoryPojoList;

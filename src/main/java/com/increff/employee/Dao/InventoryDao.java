@@ -22,7 +22,7 @@ public class InventoryDao {
 
 
 
-    public void update(int id, int quantity){
+    public void update(Long id, Long quantity){
 
     }
     public List<InventoryPojo> getAll(){
@@ -30,7 +30,7 @@ public class InventoryDao {
         TypedQuery<InventoryPojo> query=em.createQuery(SelectAll, InventoryPojo.class);
         return query.getResultList();
     }
-    public InventoryPojo getById(int id){
+    public InventoryPojo getById(Long id){
         TypedQuery<InventoryPojo> query=em.createQuery(SelectByID, InventoryPojo.class);
         query.setParameter("id",id);
         return query.getResultStream().findFirst().orElse(null);

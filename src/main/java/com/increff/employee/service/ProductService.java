@@ -4,6 +4,7 @@ import com.increff.employee.Exception.ApiException;
 import com.increff.employee.Dao.ProductDao;
 import com.increff.employee.pojo.BrandPojo;
 import com.increff.employee.pojo.ProductPojo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +29,11 @@ public class ProductService {
             if (productPojo1 != null) {
                 throw new ApiException("Already present in the database");
             }
-            else if(productPojo.getMrp()<0){
-                throw new ApiException("MRP can't be negative");
+            else if(productPojo.getMrp()<=0){
+                throw new ApiException("MRP can't be zero or negative");
+            }
+            else if(productPojo.getMrp().toString().length()==0){
+                throw new ApiException("MRP can't be empty");
             }
             else if(brandPojo==null){
                 throw new ApiException("Brand is not present in the database");
@@ -57,19 +61,25 @@ public class ProductService {
     @Transactional(rollbackFor = ApiException.class)
     public void update(Long id, ProductPojo productPojo) {
         ProductPojo productPojo1 = getByID(id);
-        brandService.getByID(productPojo.getBrandCategory());
+        //brandService.getByID(productPojo.getBrandCategory());
 
         if (productPojo1 == null) {
             throw new ApiException("Not present in the database");
         } else if (productPojo1.getBrandCategory() == productPojo.getBrandCategory() && productPojo1.getMrp() == productPojo.getMrp() && productPojo1.getBarcode() == productPojo.getBarcode() && productPojo1.getName() == productPojo.getName()) {
             throw new ApiException("No update needed");
+        }else if(productPojo.getMrp()==null || productPojo.getMrp().toString().length()==0){
+            throw new ApiException("MRP can't be empty");
+        } else if(productPojo.getMrp()<0){
+            throw new ApiException("MRP can't be be negative");
+        }else if(productPojo.getName().length()==0){
+            throw new ApiException("The Name cannot be null");
         } else {
-            productPojo.setId(productPojo1.getId());
-            productPojo.setBrandCategory(productPojo1.getBrandCategory());
-            productPojo.setBarcode(productPojo1.getBarcode());
-            productPojo.setMrp(productPojo1.getMrp());
-            productPojo.setName(productPojo1.getName());
-            productDao.update(id, productPojo);
+            productPojo1.setId(productPojo.getId());
+            productPojo1.setBrandCategory(productPojo.getBrandCategory());
+            productPojo1.setBarcode(productPojo.getBarcode());
+            productPojo1.setMrp(productPojo.getMrp());
+            productPojo1.setName(productPojo.getName());
+            productDao.update(id, productPojo1);
         }
     }
 

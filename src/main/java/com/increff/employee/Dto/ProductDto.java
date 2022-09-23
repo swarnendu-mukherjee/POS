@@ -61,8 +61,14 @@ public class ProductDto {
 
     public void update(Long id, ProductForm productForm) {
         //BrandHelper.Normalize(brandForm);
-        long brandID=brandService.getByNameAndCategory(productForm.getBrand(),productForm.getCategory()).getId();
+
+        BrandPojo brandPojo=brandService.getByNameAndCategory(productForm.getBrand(),productForm.getCategory());
+        if(brandPojo==null){
+            throw new ApiException("This brand is absent in the database, so update can not be done");
+        }
+        Long brandID=brandPojo.getId();
         ProductPojo productPojo = ProductHelper.ConvertFormToPojo(productForm,brandID);
+        productPojo.setId(id);
         productService.update(id, productPojo);
     }
     public List<BrandPojo> getByProductPojo(List<ProductPojo> productPojoList){

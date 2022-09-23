@@ -1,8 +1,10 @@
 package com.increff.employee.model.Forms;
 
-import com.sun.istack.NotNull;
+
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -11,7 +13,10 @@ public class ProductForm {
     private String barcode;
     private String brand;
     private String category;
-    @NotNull
+
+   @NotNull
     private String name;
+
+    @NotNull
     private Double mrp;
 }
