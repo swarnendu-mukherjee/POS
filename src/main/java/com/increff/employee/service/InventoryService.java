@@ -4,6 +4,7 @@ import com.increff.employee.Dao.InventoryDao;
 import com.increff.employee.Exception.ApiException;
 import com.increff.employee.model.Forms.InventoryForm;
 import com.increff.employee.pojo.InventoryPojo;
+import com.increff.employee.pojo.OrderItemPojo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,4 +74,13 @@ public class InventoryService {
     }
 
 
+    @Transactional(rollbackFor = ApiException.class)
+    public void placeOrder(List<OrderItemPojo> orderItemPojoList) {
+        for(OrderItemPojo orderItemPojo: orderItemPojoList){
+            InventoryPojo inventoryPojo = getById(orderItemPojo.getProductId());
+            if(inventoryPojo.getQuantity()<orderItemPojo.getQuantity())
+                throw new ApiException(String.format("Only {} quantity present in inventory", inventoryPojo.getQuantity()));
+            update(inventoryPojo.getId(), inventoryPojo.getQuantity()- orderItemPojo.getQuantity());
+        }
+    }
 }

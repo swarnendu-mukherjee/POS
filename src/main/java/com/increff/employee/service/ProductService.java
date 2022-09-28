@@ -24,7 +24,7 @@ public class ProductService {
     public void add(List<ProductPojo> productPojoList) {
 
         for (ProductPojo productPojo : productPojoList) {
-            ProductPojo productPojo1 = getByParameters(productPojo);
+            ProductPojo productPojo1 = getByBarcode(productPojo.getBarcode());
             BrandPojo brandPojo = brandService.getByID(productPojo.getBrandCategory());
             if (productPojo1 != null) {
                 throw new ApiException("Already present in the database");
@@ -45,6 +45,7 @@ public class ProductService {
         }
     }
 
+    @Transactional(readOnly = true)
     public List<ProductPojo> getAll() {
         return productDao.getAll();
     }
@@ -74,9 +75,8 @@ public class ProductService {
         }else if(productPojo.getName().length()==0){
             throw new ApiException("The Name cannot be null");
         } else {
-            productPojo1.setId(productPojo.getId());
+
             productPojo1.setBrandCategory(productPojo.getBrandCategory());
-            productPojo1.setBarcode(productPojo.getBarcode());
             productPojo1.setMrp(productPojo.getMrp());
             productPojo1.setName(productPojo.getName());
             productDao.update(id, productPojo1);
@@ -87,9 +87,12 @@ public class ProductService {
        return productDao.getByID(id);
     }
 
-    public ProductPojo getByParameters(ProductPojo productPojo) {
-        ProductPojo productPojo1 = productDao.getByParameters(productPojo);
-        return productPojo1;
+    public ProductPojo getByBarcode(String barcode){
+        ProductPojo productPojo= productDao.getByBarcode(barcode);
+        if(productPojo==null){
+            throw new ApiException("This Product is absent in the database");
+        }
+        return productPojo;
     }
 
 

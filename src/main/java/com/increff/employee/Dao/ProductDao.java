@@ -15,7 +15,9 @@ public class ProductDao {
     @PersistenceContext
     private EntityManager em;
     private static final String SELECTBYID="select p from ProductPojo p where id=:id";
-    private static final String SELETBYPARAMETERS="select p from ProductPojo p where barcode=:barcode";
+
+    private static final String SELECTBYBARCODE="select p from ProductPojo P where barcode=:barcode";
+    //private static final String SELETBYPARAMETERS="select p from ProductPojo p where barcode=:barcode";
     private static final String SELECTALL="select p from ProductPojo p";
     private static final String DELETEBYID="delete from ProductPojo p where id=:id";
     public List<ProductPojo> getAll(){
@@ -37,9 +39,9 @@ public class ProductDao {
         query.setParameter("id",id);
         return query.getResultStream().findFirst().orElse(null);
     }
-    public ProductPojo getByParameters(ProductPojo productPojo){
-        TypedQuery<ProductPojo> query=em.createQuery(SELETBYPARAMETERS, ProductPojo.class);
-        query.setParameter("barcode",productPojo.getBarcode());
+    public ProductPojo getByBarcode(String barcode){
+        TypedQuery<ProductPojo> query=em.createQuery(SELECTBYBARCODE, ProductPojo.class);
+        query.setParameter("barcode",barcode);
         return query.getResultStream().findFirst().orElse(null);
     }
 

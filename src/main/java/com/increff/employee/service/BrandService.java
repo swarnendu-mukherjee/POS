@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BrandService {
@@ -53,7 +54,7 @@ public class BrandService {
         else if(input.getBrandName().length()==0 || input.getCategoryName().length()==0){
             throw new ApiException("Brand can not be updated with null input");
         }
-        brandpojo.setId(id);
+        //brandpojo.setId(id);
         brandpojo.setBrandName(input.getBrandName());
         brandpojo.setCategoryName(input.getCategoryName());
         brandDao.update(brandpojo);
@@ -61,9 +62,9 @@ public class BrandService {
     public BrandPojo getByID(Long id)
     {
         BrandPojo brandPojo = brandDao.getByID(id);
-        if(brandPojo==null){
+        if(Objects.isNull(brandPojo)){
             throw new ApiException("This ID is not present in the Database");
-        }
+        }/*****/
         return brandPojo;
     }
 
